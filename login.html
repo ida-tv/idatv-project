@@ -2,21 +2,134 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Регистрация / Вход - IDA TV</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
-        .form-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { text-align: center; color: #333; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-        label { font-size: 13px; color: #666; display: block; margin-top: 10px; }
-        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-top: 15px; font-size: 13px; color: #444; }
-        .checkbox-group input { width: auto; margin: 0; margin-top: 3px; }
-        button { width: 100%; padding: 14px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 20px; font-weight: bold; }
-        button:hover { background: #0056b3; }
-        .hidden { display: none !important; } /* Добавлено !important для гарантии скрытия */
-        .section-title { font-weight: bold; border-bottom: 1px solid #eee; margin-top: 15px; padding-bottom: 5px; color: #007bff; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: #f0f2f5; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 16px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            width: 100%; 
+            max-width: 500px; 
+            box-sizing: border-box;
+        }
+
+        h2 { text-align: center; color: #1c1e21; margin-top: 0; margin-bottom: 25px; font-size: 24px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            margin: 8px 0; 
+            border: 1px solid #dddfe2; 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            background-color: #f5f6f7;
+            color: #1c1e21;
+            -webkit-appearance: none;
+        }
+        
+        input:focus, select:focus {
+            border-color: #1877f2;
+            background-color: #fff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+        }
+
+        label { font-size: 14px; color: #606770; display: block; margin-top: 12px; font-weight: 600; }
+        
+        .checkbox-group { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            margin-top: 25px; 
+            padding: 15px;
+            background: #f8f9fa; 
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid #eee;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            display: none;
+        }
+
+        .custom-checkbox {
+            width: 26px;
+            height: 26px;
+            border: 2px solid #1877f2;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-group input:checked + .custom-checkbox {
+            background: #1877f2;
+        }
+
+        .custom-checkbox::after {
+            content: "✓";
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .checkbox-group input:checked + .custom-checkbox::after {
+            display: block;
+        }
+
+        .checkbox-group label { 
+            margin: 0 !important; 
+            font-weight: normal !important; 
+            color: #4b4f56;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button#submitBtn { 
+            width: 100%; 
+            padding: 16px; 
+            background: #1877f2; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 18px; 
+            margin-top: 25px; 
+            font-weight: bold; 
+        }
+
+        .hidden { display: none !important; }
+        .section-title { font-weight: bold; border-bottom: 2px solid #e9ebee; margin-top: 20px; padding-bottom: 8px; color: #1877f2; font-size: 17px; }
+        .toggle-p { text-align: center; margin-top: 20px; font-size: 15px; }
+        .toggle-p a { color: #1877f2; text-decoration: none; font-weight: 600; }
+
+        @media screen and (max-width: 480px) {
+            body { padding: 10px; align-items: flex-start; background: #fff; }
+            .form-box { padding: 20px; border-radius: 0; box-shadow: none; border: none; }
+            .grid { grid-template-columns: 1fr; gap: 0; }
+            input, select { padding: 12px; }
+        }
     </style>
 </head>
 <body>
@@ -33,7 +146,7 @@
                 <input type="text" id="fname" placeholder="Имя">
                 <input type="text" id="lname" placeholder="Фамилия">
             </div>
-            <input type="tel" id="phone" placeholder="Номер телефона (например +372...)">
+            <input type="tel" id="phone" placeholder="Номер телефона (+372...)">
 
             <div class="section-title">Адрес установки</div>
             <input type="text" id="city" placeholder="Город">
@@ -43,20 +156,24 @@
             </div>
 
             <div class="section-title">Параметры услуги</div>
-            <label>Тип услуги:</label>
+            <label>Выбрать заявку:</label>
             <select id="serviceType">
-                <option value="Playlist">Только Плейлист</option>
-                <option value="Remote">Удалённое подключение</option>
-                <option value="On-site">Настройка по адресу</option>
+                <option value="Плейлист: Базовый (25 EUR)">Плейлист: Базовый — 25 EUR</option>
+                <option value="Плейлист: Оптимальный (35 EUR)">Плейлист: Оптимальный — 35 EUR</option>
+                <option value="Аренда оборудования (15 EUR/мес)">Аренда оборудования — 15 EUR/мес</option>
+                <option value="Настройка на приставку (90 EUR)">Настройка на приставку — 90 EUR</option>
+                <option value="Удалённая Настройка (65 EUR)">Удалённая Настройка — 65 EUR</option>
+                <option value="Smart TV на месте (70 EUR)">Smart TV на месте — 70 EUR</option>
             </select>
 
             <label>Ваше устройство:</label>
             <select id="deviceType">
-                <option value="Smart TV LG">Smart TV: LG</option>
-                <option value="Smart TV Samsung">Smart TV: Samsung</option>
-                <option value="Android TV">Android TV / Приставка</option>
-                <option value="Rent Box">Аренда приставки</option>
-                <option value="Unknown">Я не знаю, что у меня</option>
+                <option value="Smart TV - Lg">Smart TV - Lg</option>
+                <option value="Smart TV - Samsung">Smart TV - Samsung</option>
+                <option value="Android - Smart TV">Android - Smart TV</option>
+                <option value="Приставка">Приставка</option>
+                <option value="Другой Smart TV">Другой Smart TV</option>
+                <option value="Не знаю">Не знаю</option>
             </select>
 
             <label>Количество устройств:</label>
@@ -68,15 +185,16 @@
                 <option value="5">5 устройств</option>
             </select>
 
-            <div class="checkbox-group">
+            <div class="checkbox-group" onclick="const c = this.querySelector('input'); c.checked = !c.checked;">
                 <input type="checkbox" id="agree">
-                <label for="agree">Я согласен с правилами сервиса и на рассылку подписки сайта <strong>IDA TV</strong></label>
+                <div class="custom-checkbox"></div>
+                <label>Я согласен с правилами сервиса IDA TV</label>
             </div>
         </div>
 
         <button type="submit" id="submitBtn">Зарегистрироваться</button>
-        <p style="text-align:center; font-size: 14px;">
-            <a href="#" onclick="toggleMode(); return false;" id="toggleLink" style="color: #007bff; text-decoration: none;">Уже есть аккаунт? Войти</a>
+        <p class="toggle-p">
+            <a href="#" onclick="toggleMode(); return false;" id="toggleLink">Уже есть аккаунт? Войти</a>
         </p>
     </form>
 </div>
@@ -99,11 +217,9 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Считываем параметр из URL (?mode=login)
     const urlParams = new URLSearchParams(window.location.search);
     let isLogin = urlParams.get('mode') === 'login';
 
-    // Функция обновления интерфейса
     function updateUI() {
         const regFields = document.getElementById('regFields');
         const title = document.getElementById('title');
@@ -122,7 +238,6 @@
             toggleLink.innerText = 'Уже есть аккаунт? Войти';
         }
 
-        // Управляем атрибутом required
         const inputs = regFields.querySelectorAll('input, select');
         inputs.forEach(el => {
             if (isLogin) el.removeAttribute('required');
@@ -130,29 +245,41 @@
         });
     }
 
-    // Делаем функцию доступной для onclick
     window.toggleMode = () => {
         isLogin = !isLogin;
         updateUI();
+        window.scrollTo(0, 0);
     };
 
-    // Запускаем UI при загрузке
     updateUI();
 
     document.getElementById('mainForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const pass = document.getElementById('pass').value;
+        const btn = document.getElementById('submitBtn');
+
+        const originalBtnText = btn.innerText;
+        btn.innerText = isLogin ? 'Вход...' : 'Регистрация...';
+        btn.disabled = true;
 
         try {
             if (isLogin) {
                 await signInWithEmailAndPassword(auth, email, pass);
                 window.location.href = 'dashboard.html';
             } else {
+                if (!document.getElementById('agree').checked) {
+                    alert("Пожалуйста, примите правила сервиса.");
+                    btn.innerText = originalBtnText;
+                    btn.disabled = false;
+                    return;
+                }
+
                 const res = await createUserWithEmailAndPassword(auth, email, pass);
                 const user = res.user;
 
                 const userData = {
+                    email: email,
                     fname: document.getElementById('fname').value,
                     lname: document.getElementById('lname').value,
                     phone: document.getElementById('phone').value,
@@ -162,8 +289,9 @@
                     device: document.getElementById('deviceType').value,
                     count: document.getElementById('devicesCount').value,
                     status: 'waiting',
-                    playlist: '',
-                    manual: '',
+                    // ИСПРАВЛЕНО: Теперь ссылка всегда полная с https://
+                    playlist: 'https://drm-play.com/swop/', 
+                    manual: 'https://',
                     arveNr: '',
                     expiry: '',
                     comment: '',
@@ -172,21 +300,23 @@
 
                 await setDoc(doc(db, "users", user.uid), userData);
 
-                const botToken = "8544750089:AAHRGQemoD5zCGLn9R70Ok2d1NsCAShazpc";
+                const botToken = "8544750089:AAHswx71xxvAMp4RyFELZuOY0Vyr9Ywds8A";
                 const chatId = "1084236547";
-                const msg = `🚀 НОВЫЙ КЛИЕНТ IDA TV!\n👤 ${userData.fname} ${userData.lname}\n📞 ${userData.phone}\n📍 ${userData.city}, ${userData.address}\n📺 Услуга: ${userData.service}\n📱 Устройство: ${userData.device}`;
+                const msg = `🚀 НОВЫЙ КЛИЕНТ IDA TV!\n👤 ${userData.fname} ${userData.lname}\n📧 ${email}\n📞 ${userData.phone}\n📍 ${userData.city}\n💰 Услуга: ${userData.service}\n📺 Устр-во: ${userData.device}`;
                 
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`)
-                .catch(err => console.error("Telegram error:", err));
+                try {
+                    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
+                } catch(tErr) { console.error("Telegram error:", tErr); }
 
                 alert('Аккаунт создан! Переходим в личный кабинет.');
                 window.location.href = 'dashboard.html';
             }
         } catch (err) { 
             console.error(err);
-            if (err.code === 'auth/wrong-password') alert("Неверный пароль!");
-            else if (err.code === 'auth/user-not-found') alert("Пользователь не найден!");
-            else if (err.code === 'auth/email-already-in-use') alert("Этот E-mail уже занят!");
+            btn.innerText = originalBtnText;
+            btn.disabled = false;
+            if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') alert("Неверный логин или пароль.");
+            else if (err.code === 'auth/email-already-in-use') alert("Этот E-mail уже занят.");
             else alert("Ошибка: " + err.message); 
         }
     });
