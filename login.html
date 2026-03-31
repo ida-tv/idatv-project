@@ -66,7 +66,7 @@
         }
 
         .checkbox-group input[type="checkbox"] {
-            display: none;
+            display: none; 
         }
 
         .custom-checkbox {
@@ -238,10 +238,15 @@
             toggleLink.innerText = 'Уже есть аккаунт? Войти';
         }
 
+        // Исправлено: required только для видимых полей
         const inputs = regFields.querySelectorAll('input, select');
         inputs.forEach(el => {
-            if (isLogin) el.removeAttribute('required');
-            else el.setAttribute('required', '');
+            if (isLogin) {
+                el.required = false;
+            } else {
+                // Делаем обязательными только те, что не чекбокс (он проверяется отдельно)
+                if (el.type !== 'checkbox') el.required = true;
+            }
         });
     }
 
@@ -278,8 +283,9 @@
                 const res = await createUserWithEmailAndPassword(auth, email, pass);
                 const user = res.user;
 
+                // Здесь плейлист создается пустым. Ссылка «https://» обычно 
+                // прописывается в панели администратора при активации.
                 const userData = {
-                    email: email,
                     fname: document.getElementById('fname').value,
                     lname: document.getElementById('lname').value,
                     phone: document.getElementById('phone').value,
@@ -289,9 +295,8 @@
                     device: document.getElementById('deviceType').value,
                     count: document.getElementById('devicesCount').value,
                     status: 'waiting',
-                    // ИСПРАВЛЕНО: Теперь ссылка всегда полная с https://
-                    playlist: 'https://drm-play.com/swop/', 
-                    manual: 'https://',
+                    playlist: '', 
+                    manual: '',
                     arveNr: '',
                     expiry: '',
                     comment: '',
@@ -302,7 +307,7 @@
 
                 const botToken = "8544750089:AAHswx71xxvAMp4RyFELZuOY0Vyr9Ywds8A";
                 const chatId = "1084236547";
-                const msg = `🚀 НОВЫЙ КЛИЕНТ IDA TV!\n👤 ${userData.fname} ${userData.lname}\n📧 ${email}\n📞 ${userData.phone}\n📍 ${userData.city}\n💰 Услуга: ${userData.service}\n📺 Устр-во: ${userData.device}`;
+                const msg = `🚀 НОВЫЙ КЛИЕНТ IDA TV!\n👤 ${userData.fname} ${userData.lname}\n📞 ${userData.phone}\n📍 ${userData.city}\n💰 Услуга: ${userData.service}\n📺 Устр-во: ${userData.device}`;
                 
                 try {
                     await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
