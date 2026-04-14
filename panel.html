@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Управление Клиентами | IDA TV</title>
+    <style>
+        body { background: #080808; color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding-top: 50px; margin: 0; }
+        .panel-container { background: #111; padding: 30px; border-radius: 12px; border: 1px solid #222; width: 100%; max-width: 450px; }
+        h2 { color: #00d4ff; text-align: center; margin-bottom: 25px; text-transform: uppercase; }
+        .input-box { margin-bottom: 15px; }
+        label { display: block; font-size: 11px; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        input { width: 100%; background: #000; border: 1px solid #333; padding: 12px; color: white; border-radius: 6px; box-sizing: border-box; outline: none; }
+        input:focus { border-color: #00d4ff; }
+        .btn-add { width: 100%; background: #00d4ff; color: #000; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 14px; }
+        .btn-add:hover { background: #fff; }
+        #log { text-align: center; margin-top: 15px; font-size: 13px; }
+        .home-link { display: block; text-align: center; margin-top: 20px; color: #444; text-decoration: none; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="panel-container">
+    <h2>Добавить Клиента</h2>
+    
+    <div class="input-box"><label>ID (латиница)</label><input type="text" id="c_id" placeholder="например: ivan77"></div>
+    <div class="input-box"><label>Имя Клиента</label><input type="text" id="c_nick" placeholder="Иван Петров"></div>
+    <div class="input-box"><label>Дата окончания</label><input type="text" id="c_date" placeholder="31.12.2026"></div>
+    <div class="input-box"><label>Плейлист M3U</label><input type="text" id="c_m3u" placeholder="http://..."></div>
+    <div class="input-box"><label>Программа EPG</label><input type="text" id="c_epg" placeholder="http://..."></div>
+
+    <button class="btn-add" onclick="sendData()">АКТИВИРОВАТЬ КЛИЕНТА</button>
+    
+    <div id="log"></div>
+    <a href="index.html" class="home-link">← Вернуться в плеер</a>
+</div>
+
+<script>
+    const DB_URL = "https://player1-71b92-default-rtdb.firebaseio.com";
+
+    async function sendData() {
+        const id = document.getElementById('c_id').value.trim();
+        const log = document.getElementById('log');
+        
+        if(!id) return alert("Введите ID!");
+
+        const payload = {
+            nickname: document.getElementById('c_nick').value,
+            expireDate: document.getElementById('c_date').value,
+            m3u: document.getElementById('c_m3u').value,
+            epg: document.getElementById('c_epg').value
+        };
+
+        log.innerText = "Отправка...";
+        
+        try {
+            const res = await fetch(`${DB_URL}/clients/${id}.json`, {
+                method: 'PUT',
+                body: JSON.stringify(payload)
+            });
+            if(res.ok) {
+                log.innerHTML = "<span style='color: #00ff00'>Успешно сохранено!</span>";
+                document.querySelectorAll('input').forEach(i => i.value = "");
+            }
+        } catch(e) {
+            log.innerHTML = "<span style='color: #ff4b5c'>Ошибка сети</span>";
+        }
+    }
+</script>
+
+</body>
+</html>
