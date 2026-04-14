@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Админка IDA TV - PRO</title>
-    <!-- ЗАЩИТА: Скрипт проверки срабатывает мгновенно до загрузки тела страницы -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDA TV | Admin Control v3</title>
     <script>
         if (sessionStorage.getItem('admin_access') !== 'true') {
             window.location.href = 'admin-login.html';
@@ -26,6 +26,9 @@
         .btn-logout { background: #343a40; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .btn-external { background: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 13px; font-weight: bold; }
         .btn-external:hover { background: #0056b3; }
+        /* Стиль для кнопки Панель 3 */
+        .btn-panel3 { background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .btn-panel3:hover { background: #218838; }
 
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
@@ -47,7 +50,7 @@
 
 <div class="admin-container">
     <div class="top-nav">
-        <!-- Кнопка на другой сайт -->
+        <a href="panel.html" class="btn-panel3">Панель 3 📁</a>
         <a href="https://ida-tv-setup-tv-admin.vercel.app/" target="_blank" class="btn-external">Открыть Панель 2 ↗</a>
         <button class="btn-logout" onclick="adminLogout()">Выйти</button>
     </div>
